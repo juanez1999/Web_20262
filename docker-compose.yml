@@ -1,0 +1,14 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shipments_testing_practice
+    ports:
+      - "5432:5432"
+    volumes:
+      - shipments_test_data:/var/lib/postgresql/data
+
+volumes:
+  shipments_test_data:
