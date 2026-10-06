@@ -6,11 +6,13 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { FilterOrdersQueryDto } from './dto/filter-orders-query.dto';
 
 const requestValidationPipe = new ValidationPipe({
   transform: true,
@@ -30,7 +32,7 @@ export class OrdersController {
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateOrderDto: UpdateOrderDto,
+    @Body(requestValidationPipe) updateOrderDto: UpdateOrderDto,
   ) {
     return this.ordersService.update(id, updateOrderDto);
   }
@@ -53,5 +55,10 @@ export class OrdersController {
   @Get('pending')
   findRecentPending() {
     return this.ordersService.findRecentPending();
+  }
+
+  @Get('search')
+  findFiltered(@Query(requestValidationPipe) query: FilterOrdersQueryDto) {
+    return this.ordersService.findFiltered(query);
   }
 }

@@ -1,10 +1,11 @@
-import { CreateOrderDto } from "./dto/create-order.dto";
-import { CustomerEntity } from "./entities/customer.entity";
-import { OrderEntity } from "./entities/order.entity";
-import { Repository } from "typeorm";
-import { UpdateOrderDto } from "./dto/update-order.dto";
-import { OrderRulesService } from "./order-rules/order-rules.service";
-import { OrderPreparationEstimateService } from "./order-preparation-estimate/order-preparation-estimate.service";
+import { CreateOrderDto } from './dto/create-order.dto';
+import { CustomerEntity } from './entities/customer.entity';
+import { OrderEntity } from './entities/order.entity';
+import { Repository } from 'typeorm';
+import { UpdateOrderDto } from './dto/update-order.dto';
+import { OrderRulesService } from './order-rules/order-rules.service';
+import { OrderPreparationEstimateService } from './order-preparation-estimate/order-preparation-estimate.service';
+import { FilterOrdersQueryDto } from './dto/filter-orders-query.dto';
 export declare class OrdersService {
     private readonly ordersRepository;
     private readonly customersRepository;
@@ -22,4 +23,5 @@ export declare class OrdersService {
         estimatedMinutes: number;
     }>;
     findRecentPending(): Promise<OrderEntity[]>;
+    findFiltered(query: FilterOrdersQueryDto): Promise<OrderEntity[]>;
 }

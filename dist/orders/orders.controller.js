@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const create_order_dto_1 = require("./dto/create-order.dto");
 const orders_service_1 = require("./orders.service");
 const update_order_dto_1 = require("./dto/update-order.dto");
+const filter_orders_query_dto_1 = require("./dto/filter-orders-query.dto");
 const requestValidationPipe = new common_1.ValidationPipe({
     transform: true,
     whitelist: true,
@@ -45,6 +46,9 @@ let OrdersController = class OrdersController {
     findRecentPending() {
         return this.ordersService.findRecentPending();
     }
+    findFiltered(query) {
+        return this.ordersService.findFiltered(query);
+    }
 };
 exports.OrdersController = OrdersController;
 __decorate([
@@ -56,7 +60,7 @@ __decorate([
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.Body)(requestValidationPipe)),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_order_dto_1.UpdateOrderDto]),
     __metadata("design:returntype", void 0)
@@ -88,6 +92,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], OrdersController.prototype, "findRecentPending", null);
+__decorate([
+    (0, common_1.Get)('search'),
+    __param(0, (0, common_1.Query)(requestValidationPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [filter_orders_query_dto_1.FilterOrdersQueryDto]),
+    __metadata("design:returntype", void 0)
+], OrdersController.prototype, "findFiltered", null);
 exports.OrdersController = OrdersController = __decorate([
     (0, common_1.Controller)('orders'),
     __metadata("design:paramtypes", [orders_service_1.OrdersService])

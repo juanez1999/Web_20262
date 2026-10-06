@@ -1,6 +1,7 @@
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { FilterOrdersQueryDto } from './dto/filter-orders-query.dto';
 export declare class OrdersController {
     private readonly ordersService;
     constructor(ordersService: OrdersService);
@@ -14,4 +15,5 @@ export declare class OrdersController {
         estimatedMinutes: number;
     }>;
     findRecentPending(): Promise<import("./entities/order.entity").OrderEntity[]>;
+    findFiltered(query: FilterOrdersQueryDto): Promise<import("./entities/order.entity").OrderEntity[]>;
 }

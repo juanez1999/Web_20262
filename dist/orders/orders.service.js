@@ -41,7 +41,7 @@ let OrdersService = class OrdersService {
         const order = this.ordersRepository.create({
             item: createOrderDto.item,
             quantity: createOrderDto.quantity,
-            status: "pending",
+            status: 'pending',
             customer,
         });
         return this.ordersRepository.save(order);
@@ -52,7 +52,7 @@ let OrdersService = class OrdersService {
                 customer: true,
             },
             order: {
-                id: "ASC",
+                id: 'ASC',
             },
         });
     }
@@ -76,7 +76,7 @@ let OrdersService = class OrdersService {
     async markAsReady(id) {
         const order = await this.findOne(id);
         this.orderRulesService.ensureCanBeMarkedAsReady(order);
-        order.status = "ready";
+        order.status = 'ready';
         return this.ordersRepository.save(order);
     }
     async estimatePreparationTime(id) {
@@ -85,12 +85,20 @@ let OrdersService = class OrdersService {
     }
     async findRecentPending() {
         return this.ordersRepository.find({
-            where: { status: "pending" },
-            order: { createdAt: "ASC" },
+            where: { status: 'pending' },
+            order: { createdAt: 'ASC' },
             take: 2,
             relations: {
                 customer: true,
             },
+        });
+    }
+    async findFiltered(query) {
+        return this.ordersRepository.find({
+            where: query.status ? { status: query.status } : {},
+            relations: { customer: true },
+            order: { id: 'ASC' },
+            take: query.limit,
         });
     }
 };

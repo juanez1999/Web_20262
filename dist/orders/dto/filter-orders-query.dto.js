@@ -9,32 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UpdateOrderDto = void 0;
+exports.FilterOrdersQueryDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
-class UpdateOrderDto {
-    item;
-    quantity;
+class FilterOrdersQueryDto {
     status;
+    limit = 5;
 }
-exports.UpdateOrderDto = UpdateOrderDto;
-__decorate([
-    (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNotEmpty)(),
-    (0, class_validator_1.MaxLength)(80),
-    __metadata("design:type", String)
-], UpdateOrderDto.prototype, "item", void 0);
-__decorate([
-    (0, class_validator_1.IsInt)(),
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.Min)(1),
-    (0, class_validator_1.Max)(20),
-    __metadata("design:type", Number)
-], UpdateOrderDto.prototype, "quantity", void 0);
+exports.FilterOrdersQueryDto = FilterOrdersQueryDto;
 __decorate([
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsIn)(['pending', 'ready']),
     __metadata("design:type", String)
-], UpdateOrderDto.prototype, "status", void 0);
-//# sourceMappingURL=update-order.dto.js.map
+], FilterOrdersQueryDto.prototype, "status", void 0);
+__decorate([
+    (0, class_transformer_1.Type)(() => Number),
+    (0, class_validator_1.IsInt)(),
+    (0, class_validator_1.Min)(1),
+    (0, class_validator_1.Max)(50),
+    __metadata("design:type", Number)
+], FilterOrdersQueryDto.prototype, "limit", void 0);
+//# sourceMappingURL=filter-orders-query.dto.js.map
