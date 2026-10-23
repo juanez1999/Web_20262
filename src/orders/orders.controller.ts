@@ -7,12 +7,14 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersService } from './orders.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { FilterOrdersQueryDto } from './dto/filter-orders-query.dto';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 const requestValidationPipe = new ValidationPipe({
   transform: true,
@@ -21,6 +23,7 @@ const requestValidationPipe = new ValidationPipe({
 });
 
 @Controller('orders')
+@UseGuards(JwtAuthGuard) // Aqui le estoy diciendo que todas las rutas quedan protegidas por el guard, es decir que para acceder a ellas se necesita un token valido
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,11 +22,12 @@ import { OrdersModule } from './orders/orders.module';
         password: configService.get<string>('DB_PASSWORD') ?? 'postgres',
         database: configService.get<string>('DB_DATABASE') ?? 'coffee_orders',
         autoLoadEntities: true,
-        synchronize: false, //En produccion se recomienda ponerlo en false para que no se pierdan datos
+        synchronize: configService.get<string>('DB_SYNC') === 'true', //En produccion se recomienda ponerlo en false para que no se pierdan datos
         ssl: configService.get<string>('NODE_ENV') === 'production',
       }),
     }),
     OrdersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
